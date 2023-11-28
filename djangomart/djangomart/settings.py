@@ -125,3 +125,15 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# URL to be redirected to when trying to access content that requires auth
+
+LOGIN_URL = '/login/'
+
+# URL to be redirected to after login
+
+LOGIN_REDIRECT_URL = '/'
+
+# URL to be redirected to after logout
+
+LOGOUT_REDIRECT_URL = '/'
