@@ -10,7 +10,7 @@
 
             {% for item in items %}
                 <div>
-                    <a href="#">
+                    <a href="{% url 'item:detail' item.id %}">
                         <div>
                             <img src="{{item.image.url}}" class="bg-white rounded-t-xl w-full aspect-square object-cover">
                         </div>
