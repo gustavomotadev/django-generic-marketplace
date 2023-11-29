@@ -1,0 +1,62 @@
+{% extends "core/base.html" %}
+
+{% block title %}Browse{% endblock %}
+
+{% block content %}
+    <div class="mt-6 pb-6 grid grid-cols-4 gap-4">
+        <div class="cols-span-1 px-6 py-12 bg-gray-100 rounded-xl">
+            <form action="{% url "item:items" %}" method="get">
+                <!-- csrf_token is not needed in forms that do not cause state changes in the server when submitted -->
+
+                <div>
+                    <input name="query" type="text" class="w-full py-4 px-6 border rounded-xl" value="{{query}}" placeholder="Search here">
+                </div>
+
+                <div>
+                    <button type="submit" class="mt-2 py-2 px-4 text-lg bg-teal-500 text-white rounded-xl hover:bg-teal-700">Search</button>
+                    <a href="{% url "item:items" %}" class="mt-2 inline-block h-full py-2 px-4 text-lg bg-gray-500 text-white rounded-xl hover:bg-gray-700">Clear</a>
+                </div>
+            </form>
+
+            <hr class="my-6">
+
+            <p class="font-semibold py-2 px-2">Categories</p>
+
+            <ul>
+                {% for category in categories %}
+                    <li class="ml-4 py-2 px-2 hover:border-l-8 border-teal-500 rounded-md {% if category.id == category_id %}bg-gray-200{% endif %}">
+                        <a href="{% url "item:items" %}?query={{query}}&category={{category.id}}">{{category.name}}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-span-3 px-6 py-12 bg-gray-100 rounded-xl">
+            
+            <div class="grid grid-cols-3 gap-3">
+
+                {% for item in items %}
+                    <div>
+                        <a href="{% url 'item:detail' item.id %}">
+                            <div>
+                                {% if item.image %}
+                                    <img src="{{item.image.url}}" class="rounded-xl w-full aspect-square object-cover">
+                                {% else %}
+                                    <div class="bg-gray-200 rounded-t-xl w-full aspect-square object-cover flex justify-center items-center">
+                                        <p class="text-2xl">No Image</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+    
+                            <div class="p-6 bg-white rounded-b-xl">
+                                <h2 class="text-2xl">{{item.name}}</h2>
+                                <p class="text-gray-500">Price: {{item.price}}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+    
+            </div>
+        </div>
+    </div>
+{% endblock %}
