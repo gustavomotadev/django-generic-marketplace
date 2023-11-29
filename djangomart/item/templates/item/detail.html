@@ -5,7 +5,13 @@
 {% block content %}
     <div class="grid grid-cols-5 gap-6">
         <div class="col-span-3">
-            <img src="{{item.image.url}}" class="rounded-xl w-full aspect-square object-cover">
+            {% if item.image %}
+                <img src="{{item.image.url}}" class="rounded-xl w-full aspect-square object-cover">
+            {% else %}
+                <div class="bg-gray-200 rounded-t-xl w-full aspect-square object-cover flex justify-center items-center">
+                    <p class="text-3xl">No Image</p>
+                </div>
+            {% endif %}
         </div>
 
         <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
@@ -19,7 +25,17 @@
                 </p>
             {% endif %}
 
-            <a href="#" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contact Seller</a>
+            {% if request.user == item.created_by %}
+                <div class="mt-6 p-6 bg-white rounded-xl">
+                    <p>This item was created by you</p>
+
+                    <div class="w-full flex justify-end">
+                        <a href="{% url "item:delete" item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl self-end">Delete</a>
+                    </div>
+                </div>
+            {% else %}
+                <a href="#" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contact Seller</a>
+            {% endif %}
         </div>
     </div>
 
@@ -33,7 +49,13 @@
             <div>
                 <a href="{% url 'item:detail' item.id %}">
                     <div>
-                        <img src="{{item.image.url}}" class="bg-white rounded-t-xl w-full aspect-square object-cover">
+                        {% if item.image %}
+                            <img src="{{item.image.url}}" class="bg-white rounded-t-xl w-full aspect-square object-cover">
+                        {% else %}
+                            <div class="bg-gray-200 rounded-t-xl w-full aspect-square object-cover flex justify-center items-center">
+                                <p class="text-2xl">No Image</p>
+                            </div>
+                        {% endif %}
                     </div>
                     
                     <div class="p-6 bg-white rounded-b-xl">

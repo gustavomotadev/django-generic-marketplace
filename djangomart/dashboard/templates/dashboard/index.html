@@ -12,7 +12,13 @@
                 <div>
                     <a href="{% url 'item:detail' item.id %}">
                         <div>
-                            <img src="{{item.image.url}}" class="bg-white rounded-t-xl w-full aspect-square object-cover">
+                            {% if item.image %}
+                                <img src="{{item.image.url}}" class="rounded-xl w-full aspect-square object-cover">
+                            {% else %}
+                                <div class="bg-gray-200 rounded-t-xl w-full aspect-square object-cover flex justify-center items-center">
+                                    <p class="text-2xl">No Image</p>
+                                </div>
+                            {% endif %}
                         </div>
 
                         <div class="p-6 bg-white rounded-b-xl">
