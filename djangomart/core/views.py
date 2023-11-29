@@ -8,7 +8,7 @@ def index(request):
 
     items = Item.objects.filter(is_sold=False).order_by('-created_at')[:6]
     
-    category_data = [{'name': category.name, 
+    category_data = [{'name': category.name, 'id': category.id, 
         'for_sale_count': category.items.filter(is_sold=False).count()
         } for category in Category.objects.all()]
 
