@@ -7,11 +7,14 @@ from .forms import SignupForm
 def index(request):
 
     items = Item.objects.filter(is_sold=False).order_by('-created_at')[:6]
-    categories = Category.objects.all()
+    
+    category_data = [{'name': category.name, 
+        'for_sale_count': category.items.filter(is_sold=False).count()
+        } for category in Category.objects.all()]
 
     return render(request, 'core/index.html', {
-            'categories': categories,
-            'items': items
+            'category_data': category_data,
+            'items': items,
         })
 
 def contact(request):
