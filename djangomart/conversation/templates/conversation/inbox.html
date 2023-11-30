@@ -1,0 +1,37 @@
+{% extends "core/base.html" %}
+
+{% block title %}Inbox{% endblock %}
+
+{% block content %}
+    <h1 class="mb-6 text-3xl">Inbox</h1>
+
+    <div class="space-y-6">
+        {% for conversation_data in conversations_data %}
+            <a href="{% url "conversation:detail" conversation_data.conversation.id %}">
+                <div class="mb-6 p-6 flex bg-gray-100 rounded-xl">
+                    <div class="pr-6">
+                        {% if conversation_data.conversation.item.image %}
+                            <img src="{{conversation_data.conversation.item.image.url}}" class="w-32 rounded-xl aspect-square object-cover">
+                        {% else %}
+                            <div class="bg-gray-200 w-32 rounded-xl aspect-square object-cover flex justify-center items-center">
+                                <p class="text-md">No Image</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        {% for member in conversation_data.conversation.members.all %}
+                            {% if member != request.user %}
+                                <p class="mb-4"><strong>{{member.username}}</strong> | {{conversation_data.conversation.modified_at}}</p>
+                                <p>{{conversation_data.conversation.item.name}}</p>
+                                {% if conversation_data.last_message %}
+                                    <p class="mt-4 text-gray-500">{{conversation_data.last_message.content}}</p>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
