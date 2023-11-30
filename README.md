@@ -7,3 +7,5 @@ Generic online marketplace created for learning purposes only
 * Email verification
 * Password reset
 * Customize admin dashboard
+* Check queries for optimization 
+* Check for more security stuff to include
